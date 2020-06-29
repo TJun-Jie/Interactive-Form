@@ -83,7 +83,6 @@ costTitle.style.display = "none";
 // select activities and store it as activities
 const activitiesDiv = document.querySelector('.activities');
 const activities =  document.querySelectorAll('.activities input');
-console.log(activities);
 // create a timingtaken array
 const takenTiming = [];
 let totalCost = 0;
@@ -92,48 +91,63 @@ let totalCost = 0;
 activitiesDiv.addEventListener('change', (e) => {
     // whenever the option is clicked 
     if (e.target.tagName==="INPUT"){
-
-// if not checked when we click it 
+        const cost = e.target.getAttribute('data-cost');
+        const timing = e.target.getAttribute('data-day-and-time');
+        
+        // Checking it
         if(e.target.checked) {
             //add cost of activity to totalcost
             //display it
-            const cost = e.target.getAttribute('data-cost');
             totalCost += parseInt(cost);
             printCost.textContent = totalCost;
             costTitle.style.display = 'block';
 
             //Add timing to takenTiming array
-            const timing = e.target.getAttribute('data-day-and-time');
             if (timing) {
                 takenTiming.push(timing);
             }
+            //check if their timings is inside the timingtaken array
+            // if inside, then disable that checkbox of that activty
 
+            disablingTimeSlots(e);
+        
 
         }
-//     see if html is hidden or not
-//     if hidden
-//         unhide it.
-//         store totalcost variable
-//     else
-//         add cost of activity to total cost
-//         display it
-//     add the timing of that option to the timingtaken array
-//     loop through all activities
-//         check if their timings is inside the timingtaken array
-//             if inside, then disable that checkbox of that activty
-//             if not inside, add it to the timing taken array
+        // Unchecking it 
+        else {
+            // Remove cost from total cost and update it
+            totalCost -= parseInt(cost)
+            printCost.textContent = totalCost;
+
+            //Remove timing from takenTiming array
+            const index =takenTiming.indexOf(timing);
+            takenTiming.splice(index, 1);
+
+            disablingTimeSlots(e);
 
             
 
-// else if not checked
-//     remove the timing of that option from the timing taken array
-//         loop through all activities
-//         check if their timings is inside the timingtaken array
-//             if not inside, then enable the checkbox of that activity
+
+        }
     }
     
 })      
 
+
+function disablingTimeSlots(e) {
+    for (let i =0 ; i < activities.length ; i++) {
+        // Timing taken and is not the element that was clicked 
+        if(takenTiming.includes(activities[i].dataset.dayAndTime) && (e.target !== activities[i])){
+            // Only disable those that are not checked
+            if(!activities[i].checked){
+                activities[i].disabled = true;
+            }
+        } else {
+            //Resets the checkbox when the same timings chekcbox are unchecked 
+            activities[i].disabled = false;
+        }
+    } 
+}
 // select payment and store it in a variable payment
 // disable select payment method
 // set default option to be credit card 
