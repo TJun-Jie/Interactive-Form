@@ -21,12 +21,59 @@ jobRole.addEventListener('change' ,  (e) => {
 })
 
 
-// select design option and store it as designooption
-document.querySelector('')
+// Selecting shirt div
+const shirtDiv = document.querySelector('.shirt-box');
+const designSelect = document.querySelector('#design');
+
 // select coloroption and store it as coloroption
-// Hide all other color options and add  Please select a theme first
+const color =  document.querySelector('#color');
+const colorOptions = color.children;
+const colorLabel = document.querySelector('#colors-js-puns label');
+// Hide and disable all other color options and add  Please select a theme first
+for (let i = 0 ; i< colorOptions.length ; i++) {
+    if (designSelect.value == "Select Theme") {
+        colorOptions[i].disabled = true;
+        colorOptions[i].style.display = "none";
+        colorLabel.textContent = "Please select an element";
+    }
+}
+ 
 // add change event listener to design option 
 // once theme is selected, change the color options to show those that corresponds to the theme
+shirtDiv.addEventListener('change', (e) => {
+    if(e.target.id === "design"){
+        if(designSelect.value === 'js puns') {
+            for (let i = 0 ; i< colorOptions.length ; i++) {
+                colorOptions[i].style.display = "none";
+                if(colorOptions[i].textContent.includes('JS Puns')) {
+                    colorOptions[i].style.display = 'block';
+                    colorOptions[i].disabled = false;
+                }
+            }
+        } 
+        else if(designSelect.value === 'heart js') {
+            for (let i = 0 ; i< colorOptions.length ; i++) {
+                colorOptions[i].style.display = "none";
+                if(colorOptions[i].textContent.endsWith('JS shirt only)')) { 
+                    colorOptions[i].style.display = 'block';
+                    colorOptions[i].disabled = false;
+                }
+            }
+        } 
+        else {
+            for (let i = 0 ; i< colorOptions.length ; i++) {
+                if (designSelect.value == "Select Theme") {
+                    colorOptions[i].disabled = true;
+                    colorOptions[i].style.display = "none";
+                    colorLabel.textContent = "Please select an element";
+                }
+            }
+        }
+               
+      
+    }
+})
+
 
 // create html for total cost of activites 
 // hide the html
