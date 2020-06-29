@@ -75,20 +75,45 @@ shirtDiv.addEventListener('change', (e) => {
 })
 
 
-// create html for total cost of activites 
 // hide the html
+const printCost = document.querySelector('#totalCost span');
+const costTitle = printCost.parentElement;
+costTitle.style.display = "none";
+
 // select activities and store it as activities
+const activitiesDiv = document.querySelector('.activities');
+const activities =  document.querySelectorAll('.activities input');
+console.log(activities);
 // create a timingtaken array
+const takenTiming = [];
+let totalCost = 0;
+
 // add change or click event listener to activities 
-// whenever the option is clicked 
-// check if it is checked or unchecked 
-// if checked
+activitiesDiv.addEventListener('change', (e) => {
+    // whenever the option is clicked 
+    if (e.target.tagName==="INPUT"){
+
+// if not checked when we click it 
+        if(e.target.checked) {
+            //add cost of activity to totalcost
+            //display it
+            const cost = e.target.getAttribute('data-cost');
+            totalCost += parseInt(cost);
+            printCost.textContent = totalCost;
+            costTitle.style.display = 'block';
+
+            //Add timing to takenTiming array
+            const timing = e.target.getAttribute('data-day-and-time');
+            if (timing) {
+                takenTiming.push(timing);
+            }
+
+
+        }
 //     see if html is hidden or not
 //     if hidden
 //         unhide it.
 //         store totalcost variable
-//         add cost of activity to totalcost
-//         display it
 //     else
 //         add cost of activity to total cost
 //         display it
@@ -105,8 +130,9 @@ shirtDiv.addEventListener('change', (e) => {
 //         loop through all activities
 //         check if their timings is inside the timingtaken array
 //             if not inside, then enable the checkbox of that activity
+    }
     
-        
+})      
 
 // select payment and store it in a variable payment
 // disable select payment method
