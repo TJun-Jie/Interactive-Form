@@ -1,4 +1,4 @@
-
+when javascript is off , all elements will not be hidden
 set autofocus name
 
 select form and store it as form
@@ -45,3 +45,13 @@ else if not checked
             if not inside, then enable the checkbox of that activity
     
         
+
+select payment and store it in a variable payment
+disable select payment method
+set default option to be credit card 
+display credit card div and hide bitcoin and paypal
+
+add change event listener to payment
+when user selects another payment option,
+display that payment options and hide the rest
+
