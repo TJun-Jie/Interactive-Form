@@ -97,6 +97,7 @@ function shirtSection() {
                     colorOptions[i].style.display = 'block';
                     colorLabel.textContent = "Color:";
                     colorOptions[i].disabled = false;
+                    color.selectedIndex = 3;           
                 }     
                 
             // If selected option is js puns , show the color for it 
@@ -105,6 +106,7 @@ function shirtSection() {
                     colorOptions[i].style.display = 'block';
                     colorLabel.textContent = "Color:";
                     colorOptions[i].disabled = false;
+                    color.selectedIndex = 0;
                 }
             }
         }
