@@ -407,6 +407,7 @@ function createErrorMessage(validator, element, errorMessage) {
         else {
             let errorHTML = element.previousElementSibling;
             if (errorHTML.textContent !== errorMessage) {
+                // change current error message to the new error
                 errorHTML.textContent = errorMessage;
             }                  
         }
