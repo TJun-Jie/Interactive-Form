@@ -14,7 +14,7 @@ const email  = document.querySelector('#mail');
 const zip = document.querySelector('#zip');
 const cvv = document.querySelector('#cvv');
 const cardNumber = document.querySelector('#cc-num')
-
+const activities =  document.querySelectorAll('.activities input');
 
 
 //Job Section
@@ -118,7 +118,6 @@ function activitiesSection() {
     
     // select activities and store it as activities
     const activitiesDiv = document.querySelector('.activities');
-    const activities =  document.querySelectorAll('.activities input');
     // create a timingtaken array
     const takenTiming = [];
     let totalCost = 0;
@@ -252,7 +251,6 @@ function emailValidator() {
 }
 
 function checkBoxValidator() {
-    const activities =  document.querySelectorAll('.activities input');
     let count =0;
     for (let i=0 ; i<activities.length; i++){
         if (activities[i].checked) {
@@ -302,10 +300,12 @@ function cvvValidator() {
 form.addEventListener('submit', (e) => {
     if(!nameValidator()){
         console.log('Please input name');
+        name.className = "invalid"
         e.preventDefault();
     }
     if (!emailValidator()) {
         console.log('please input email');
+        email.className ="invalid"
         e.preventDefault();
     }
     if (!checkBoxValidator()){
@@ -317,15 +317,18 @@ form.addEventListener('submit', (e) => {
     if (payment.value === "credit card") {
         if (!cardNumberValidator()){
             console.log('please enter a credit card number')
+            cardNumber.className = "invalid"
             e.preventDefault();
         };
     
         if (!zipValidator()){
             console.log('please enter a zip')
+            zip.className = "invalid"
             e.preventDefault();
         };
         if (!cvvValidator()){
             console.log('please enter a cvv')
+            cvv.className = "invalid"
             e.preventDefault();
         };
 

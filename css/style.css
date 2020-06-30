@@ -101,6 +101,10 @@ input:focus {
 	transition: border-color .4s, background-color .4s;
 }
 
+.invalid {
+	border: 1px red solid;
+}
+
 input[type="checkbox"],
 input[type="radio"] {
 	display: inline-block;
