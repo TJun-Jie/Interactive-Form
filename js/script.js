@@ -169,19 +169,61 @@ function activitiesSection() {
 
 }
 
+function paymentSection() {
+    // select payment and store it in a variable payment
+    const payment = document.querySelector('#payment');
+
+    // disable select payment method
+    const paymentOptions = document.querySelectorAll('#payment option')
+    const selectMethod = paymentOptions[0]
+    selectMethod.disabled = true;
+
+    const creditCard = document.querySelector('#credit-card');
+    const paypal = document.querySelector('#paypal');
+    const bitcoin = document.querySelector('#bitcoin')
+
+    //Hide bitcoin and paypal first
+    paypal.style.display = "none";
+    bitcoin.style.display = "none"
+    //; set default option to be credit card 
+    // add change event listener to payment
+    payment.addEventListener('change', () => {
+        showPaymentMethods(payment.value);
+    })
+
+// when user selects another payment option,
+// display that payment options and hide the rest
+    function showPaymentMethods(paymentMethod) {
+        if (paymentMethod === "credit card"){
+            // display credit card div and hide bitcoin and paypal
+            paypal.style.display = 'none';
+            bitcoin.style.display = 'none';
+            creditCard.style.display = 'block';
+        }
+        else if (paymentMethod === "bitcoin") {
+            //Display bitcoin and hide the rest
+            creditCard.style.display = 'none'
+            paypal.style.display = 'none'
+            bitcoin.style.display ="block"
+        } else if (paymentMethod === "paypal") {
+            //Display paypal and hide the rest
+            creditCard.style.display = "none"
+            bitcoin.style.display = "none"
+            paypal.style.display = "block"
+        }
+    }
+}
+
+
+
+
+
+
 function initialize() {
     jobSection();
     shirtSection();
     activitiesSection();
+    paymentSection();
 }
 
 initialize();
-
-// select payment and store it in a variable payment
-// disable select payment method
-// set default option to be credit card 
-// display credit card div and hide bitcoin and paypal
-
-// add change event listener to payment
-// when user selects another payment option,
-// display that payment options and hide the rest
