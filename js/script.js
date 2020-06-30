@@ -2,6 +2,10 @@
 // select form and store it as form
 const form = document.querySelector('form');
 
+//Setting autofocus for name
+const name = document.querySelector('#name');
+name.focus();
+
 
 //Job Section
 function jobSection() {
@@ -178,6 +182,8 @@ function paymentSection() {
     const selectMethod = paymentOptions[0]
     selectMethod.disabled = true;
 
+    //Setting credit card as default
+    paymentOptions[1].selected = true;
     const creditCard = document.querySelector('#credit-card');
     const paypal = document.querySelector('#paypal');
     const bitcoin = document.querySelector('#bitcoin')
@@ -185,7 +191,8 @@ function paymentSection() {
     //Hide bitcoin and paypal first
     paypal.style.display = "none";
     bitcoin.style.display = "none"
-    //; set default option to be credit card 
+
+
     // add change event listener to payment
     payment.addEventListener('change', () => {
         showPaymentMethods(payment.value);
@@ -213,6 +220,16 @@ function paymentSection() {
         }
     }
 }
+
+function nameValidator() {
+    console.log(name.value)
+}
+
+
+form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    nameValidator();
+})
 
 
 
