@@ -1,10 +1,20 @@
 
-// select form and store it as form
+
+//Global Variables
 const form = document.querySelector('form');
+
+// select payment and store it in a variable payment
+const payment = document.querySelector('#payment');
 
 //Setting autofocus for name
 const name = document.querySelector('#name');
 name.focus();
+
+const email  = document.querySelector('#mail');
+const zip = document.querySelector('#zip');
+const cvv = document.querySelector('#cvv');
+const cardNumber = document.querySelector('#cc-num')
+
 
 
 //Job Section
@@ -174,8 +184,7 @@ function activitiesSection() {
 }
 
 function paymentSection() {
-    // select payment and store it in a variable payment
-    const payment = document.querySelector('#payment');
+
 
     // disable select payment method
     const paymentOptions = document.querySelectorAll('#payment option')
@@ -221,14 +230,110 @@ function paymentSection() {
     }
 }
 
+
+
 function nameValidator() {
-    console.log(name.value)
+    if(name.value.length > 0) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function emailValidator() {
+    const validation =/^[\w]+@[a-z]+\.[a-z]+$/i;
+    if (validation.test(email.value)) {
+        return true;
+    }
+    else {
+        return false;
+    }
+
+}
+
+function checkBoxValidator() {
+    const activities =  document.querySelectorAll('.activities input');
+    let count =0;
+    for (let i=0 ; i<activities.length; i++){
+        if (activities[i].checked) {
+            count += 1
+        }
+    }
+    if (count > 0) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 
+
+function cardNumberValidator() {
+    const validation = /^[\d]{13,16}$/;
+    if (validation.test(cardNumber.value)){
+        return true
+    } else {
+        return false
+    }
+}
+
+
+function zipValidator() {
+    const validation = /^[\d]{5}$/;
+    if (validation.test(zip.value)){
+        return true
+    } else {
+        return false
+    }
+}
+
+function cvvValidator() {
+    const validation = /^[\d]{3}$/;
+    if (validation.test(cvv.value)){
+        return true
+    } else {
+        return false
+    }
+}
+
+
+
+
 form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    nameValidator();
+    if(!nameValidator()){
+        console.log('Please input name');
+        e.preventDefault();
+    }
+    if (!emailValidator()) {
+        console.log('please input email');
+        e.preventDefault();
+    }
+    if (!checkBoxValidator()){
+        console.log('please select an activity')
+        e.preventDefault();
+    };
+
+    // Only check credit card validation if payment is credit card
+    if (payment.value === "credit card") {
+        if (!cardNumberValidator()){
+            console.log('please enter a credit card number')
+            e.preventDefault();
+        };
+    
+        if (!zipValidator()){
+            console.log('please enter a zip')
+            e.preventDefault();
+        };
+        if (!cvvValidator()){
+            console.log('please enter a cvv')
+            e.preventDefault();
+        };
+
+    }
+
+
+
+
 })
 
 
