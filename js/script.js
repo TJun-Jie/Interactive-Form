@@ -332,19 +332,26 @@ function cvvValidator() {
 // check if all fields are valid before submitting. If not prevent it from submitting
 form.addEventListener('submit', (e) => {
     if(!nameValidator()){
-        console.log('Please input name');
-        name.className = "invalid"
+        createErrorMessage(nameValidator, name, nameError);
         e.preventDefault();
     }
     if (!emailValidator()) {
-        console.log(emailError);
-        email.className ="invalid"
+        createErrorMessage(emailValidator, email, emailError);
         e.preventDefault();
     }
-    if (!checkBoxValidator()){
-        console.log(checkboxError);
-        e.preventDefault();
-    };
+    if (!checkBoxValidator()) {
+        // if the activities has not be declared as invalid yet
+        if (activitiesDiv.className !== "invalid-activities") {     
+            let errorHTML = document.createElement('p');
+            errorHTML.textContent = checkboxError;
+            errorHTML.style.color = "red"
+            activitiesDiv.insertBefore(errorHTML, document.querySelector('.activities label'))
+            activitiesDiv.classList.add("invalid-activities");
+            e.preventDefault();
+        } 
+    }
+
+    
 
     // Only check credit card validation if payment is credit card
     if (payment.value === "credit card") {
