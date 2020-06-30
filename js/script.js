@@ -11,6 +11,9 @@ const cardNumber = document.querySelector('#cc-num')
 const activities =  document.querySelectorAll('.activities input');
 const activitiesDiv = document.querySelector('.activities');
 
+//Setting autofocus on name when page reload 
+name.focus();
+
 
 //Job Section
 function jobSection() {
@@ -246,11 +249,11 @@ function nameValidator() {
     }
 }
 
-
+// different email error messagees for exceed expectations
 let emailError = ''
 function emailValidator() {
     // regex for normal email
-    const validation =/^[\w]+@[a-z]+\.[a-z]+$/i;
+    const validation =/^[\w]+@[a-z]+\.[a-z]{3}$/i;
     // if email is not empty 
     if (email.value ==="") {
         emailError = 'Email field cannot be blank';
@@ -333,15 +336,17 @@ function cvvValidator() {
 form.addEventListener('submit', (e) => {
     if(!nameValidator()){
         createErrorMessage(nameValidator, name, nameError);
+        name.focus();
         e.preventDefault();
     }
     if (!emailValidator()) {
         createErrorMessage(emailValidator, email, emailError);
+        email.focus();
         e.preventDefault();
     }
     if (!checkBoxValidator()) {
-        // if the activities has not be declared as invalid yet
-        if (activitiesDiv.className !== "invalid-activities") {     
+        // if the activities has not be declared as invalid yet then create the html.
+        if (activitiesDiv.className !== "activities invalid-activities") {     
             let errorHTML = document.createElement('p');
             errorHTML.textContent = checkboxError;
             errorHTML.style.color = "red"
@@ -351,38 +356,76 @@ form.addEventListener('submit', (e) => {
         } 
     }
 
-    
-
     // Only check credit card validation if payment is credit card
     if (payment.value === "credit card") {
         if (!cardNumberValidator()){
             cardNumber.className = "invalid"
             console.log(cardNumberError);
+            cardNumber.focus()
             e.preventDefault();
         };
     
         if (!zipValidator()){
             zip.className = "invalid"
             console.log(zipError);
+            zip.focus();
             e.preventDefault();
         };
         if (!cvvValidator()){
             cvv.className = "invalid"
             console.log(cvvError)
+            cvv.focus();
             e.preventDefault();
         };
-
     }
-
 })
 
-// Real time validation for name and email
+// Real time validation for credit card without error messages 
+cardNumber.addEventListener('focusout', () => {
+    cardErrorDisplay(cardNumberValidator, cardNumber);
+})
+cardNumber.addEventListener('input', () => {
+    cardErrorDisplay(cardNumberValidator, cardNumber);
+})
+
+cvv.addEventListener('focusout', () => {
+    cardErrorDisplay(cvvValidator, cvv);
+})
+cvv.addEventListener('input', () => {
+    cardErrorDisplay(cvvValidator, cvv);
+})
+
+zip.addEventListener('focusout', () => {
+    cardErrorDisplay(zipValidator, zip);
+})
+zip.addEventListener('input', () => {
+    cardErrorDisplay(zipValidator, zip);
+})
+
+
+
+
+function cardErrorDisplay(validator, element) {
+    // If not valid
+    if (!validator()){
+        element.className = "invalid"
+        element.previousElementSibling.style.color = "red";
+    }
+    // If valid
+    else {
+        element.classList.remove('invalid')
+        element.previousElementSibling.style.color = "black";
+    }
+
+}
+
+// Real time validation for name and email with error messages 
 name.addEventListener('input', () => {
     nameValidator();
     createErrorMessage(nameValidator, name, nameError);
 })
 
-name.addEventListener('focus', () => {
+name.addEventListener('focusout', () => {
     nameValidator();
     createErrorMessage(nameValidator, name, nameError);
 })
@@ -393,7 +436,7 @@ email.addEventListener('input', () => {
     createErrorMessage(emailValidator, email, emailError);
 })
 
-email.addEventListener('focus', () => {
+email.addEventListener('focusout', () => {
     emailValidator()
     createErrorMessage(emailValidator, email, emailError);
 })
@@ -468,7 +511,6 @@ function initialize() {
     paymentSection();
 }
 
-//Setting autofocus on name when page reload 
-name.focus();
+
 
 initialize();
