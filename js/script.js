@@ -2,19 +2,14 @@
 
 //Global Variables
 const form = document.querySelector('form');
-
-// select payment and store it in a variable payment
 const payment = document.querySelector('#payment');
-
-//Setting autofocus for name
 const name = document.querySelector('#name');
-name.focus();
-
 const email  = document.querySelector('#mail');
 const zip = document.querySelector('#zip');
 const cvv = document.querySelector('#cvv');
 const cardNumber = document.querySelector('#cc-num')
 const activities =  document.querySelectorAll('.activities input');
+const activitiesDiv = document.querySelector('.activities');
 
 
 //Job Section
@@ -38,6 +33,7 @@ function jobSection() {
     })
 }
 
+// Shirt section
 function shirtSection() {
     // Selecting shirt div
     const shirtDiv = document.querySelector('.shirt-box');
@@ -47,6 +43,9 @@ function shirtSection() {
     const color =  document.querySelector('#color');
     const colorOptions = color.children;
     const colorLabel = document.querySelector('#colors-js-puns label');
+
+    //Hiding the select options before design is selected
+    color.style.display = "none";
     // Hide and disable all other color options and add  Please select a theme first
     for (let i = 0 ; i< colorOptions.length ; i++) {
         if (designSelect.value == "Select Theme") {
@@ -61,15 +60,16 @@ function shirtSection() {
     shirtDiv.addEventListener('change', (e) => {
         if(e.target.id === "design"){
             //If a theme is selected
-            if (designSelect.value) {
+            if (designSelect.value !== "Select Theme") {
+                //Show the dropdown bar when design is selected 
+                color.style.display = "block"
                 onHideDesign(designSelect.value);
             }
             //If no theme is selected
             else {
+                color.style.display = "none";
                 onHideDesign(designSelect.value);
             }
-                   
-          
         }
     })
     
@@ -111,13 +111,17 @@ function shirtSection() {
 
 
 function activitiesSection() {
+    //Adding total cost html :<p id="totalCost">Total: $<span></span></p>
+    const p = document.createElement('p');
+    p.id = "totalCost"
+    p.innerHTML = "Total: $<span></span>"
+    activitiesDiv.appendChild(p);
+
     // hide the html
     const printCost = document.querySelector('#totalCost span');
     const costTitle = printCost.parentElement;
     costTitle.style.display = "none";
     
-    // select activities and store it as activities
-    const activitiesDiv = document.querySelector('.activities');
     // create a timingtaken array
     const takenTiming = [];
     let totalCost = 0;
@@ -128,11 +132,10 @@ function activitiesSection() {
         if (e.target.tagName==="INPUT"){
             const cost = e.target.getAttribute('data-cost');
             const timing = e.target.getAttribute('data-day-and-time');
-            
-            // Checking it
+
+            // when checkbox gets checked
             if(e.target.checked) {
-                //add cost of activity to totalcost
-                //display it
+                //add cost of activity to totalcost and  display it
                 totalCost += parseInt(cost);
                 printCost.textContent = totalCost;
                 costTitle.style.display = 'block';
@@ -182,8 +185,9 @@ function activitiesSection() {
 
 }
 
-function paymentSection() {
 
+//Payment section
+function paymentSection() {
 
     // disable select payment method
     const paymentOptions = document.querySelectorAll('#payment option')
@@ -230,28 +234,44 @@ function paymentSection() {
 }
 
 
-
+// Name validator
+nameError = ''
 function nameValidator() {
+    // Make sure that name is not empty 
     if(name.value.length > 0) {
         return true;
     } else {
+        nameError ='Name field cannot be left blank';
         return false;
     }
 }
 
+
+let emailError = ''
 function emailValidator() {
+    // regex for normal email
     const validation =/^[\w]+@[a-z]+\.[a-z]+$/i;
-    if (validation.test(email.value)) {
-        return true;
+    // if email is not empty 
+    if (email.value ==="") {
+        emailError = 'Email field cannot be blank';
+        return false;
+    }
+    // validation with regex
+    else if (!validation.test(email.value)) {
+        emailError = 'Your email is invalid';
+        return false;
     }
     else {
-        return false;
+        return true;
     }
 
 }
 
+
+let checkboxError = '';
 function checkBoxValidator() {
     let count =0;
+    // ensure that at least 1 checkbox is checked 
     for (let i=0 ; i<activities.length; i++){
         if (activities[i].checked) {
             count += 1
@@ -260,43 +280,56 @@ function checkBoxValidator() {
     if (count > 0) {
         return true;
     } else {
+        checkboxError = 'You need to select at least 1 activity'
         return false;
     }
 }
 
-
-
+let cardNumberError = '';
 function cardNumberValidator() {
     const validation = /^[\d]{13,16}$/;
-    if (validation.test(cardNumber.value)){
-        return true
-    } else {
+    // No number inside
+    if (cardNumber.value === "") {
+        cardNumberError = 'Please fill in card no.'
         return false
+    }
+    //  If number is not 13 to 16 digits
+    else if (!validation.test(cardNumber.value)){
+        cardNumberError = 'Card number must be between 13 to 16 digits'
+        return false
+    } else{
+        return true
     }
 }
 
-
+let zipError = '';
 function zipValidator() {
+    // ensure that number has 5 digits
     const validation = /^[\d]{5}$/;
-    if (validation.test(zip.value)){
-        return true
-    } else {
+    if (!validation.test(zip.value)){
+        zipError = 'ZIP must have at  least 5 digits';
         return false
+    } else {
+        return true
     }
 }
 
+
+let cvvError = '';
 function cvvValidator() {
+    // ensure that number has 3 digits
     const validation = /^[\d]{3}$/;
-    if (validation.test(cvv.value)){
-        return true
-    } else {
+    if (!validation.test(cvv.value)){
+        cvvError = "CVV must have at least 3 digits";
         return false
+    } else {
+        return true
     }
 }
 
 
 
-
+// check if all fields are valid before submitting. If not prevent it from submitting
 form.addEventListener('submit', (e) => {
     if(!nameValidator()){
         console.log('Please input name');
@@ -304,44 +337,120 @@ form.addEventListener('submit', (e) => {
         e.preventDefault();
     }
     if (!emailValidator()) {
-        console.log('please input email');
+        console.log(emailError);
         email.className ="invalid"
         e.preventDefault();
     }
     if (!checkBoxValidator()){
-        console.log('please select an activity')
+        console.log(checkboxError);
         e.preventDefault();
     };
 
     // Only check credit card validation if payment is credit card
     if (payment.value === "credit card") {
         if (!cardNumberValidator()){
-            console.log('please enter a credit card number')
             cardNumber.className = "invalid"
+            console.log(cardNumberError);
             e.preventDefault();
         };
     
         if (!zipValidator()){
-            console.log('please enter a zip')
             zip.className = "invalid"
+            console.log(zipError);
             e.preventDefault();
         };
         if (!cvvValidator()){
-            console.log('please enter a cvv')
             cvv.className = "invalid"
+            console.log(cvvError)
             e.preventDefault();
         };
 
     }
 
+})
 
+// Real time validation for name and email
+name.addEventListener('input', () => {
+    nameValidator();
+    createErrorMessage(nameValidator, name, nameError);
+})
 
-
+name.addEventListener('focus', () => {
+    nameValidator();
+    createErrorMessage(nameValidator, name, nameError);
 })
 
 
+email.addEventListener('input', () => {
+    emailValidator()
+    createErrorMessage(emailValidator, email, emailError);
+})
+
+email.addEventListener('focus', () => {
+    emailValidator()
+    createErrorMessage(emailValidator, email, emailError);
+})
 
 
+function createErrorMessage(validator, element, errorMessage) {
+    // If not valid
+    if (!validator()) {
+        // if the element has not be declared as invalid yet create new error message and put it beside label
+        if (element.className !== "invalid") {     
+            let errorHTML = document.createElement('p');
+            errorHTML.textContent = errorMessage
+            errorHTML.style.color = "red"
+            element.insertAdjacentElement('beforebegin', errorHTML)
+            element.classList.add("invalid");
+        } 
+        // if the element is still invalid but there is a change of error message
+        else {
+            let errorHTML = element.previousElementSibling;
+            if (errorHTML.textContent !== errorMessage) {
+                errorHTML.textContent = errorMessage;
+            }                  
+        }
+    } 
+    //If valid
+    else {
+        removeP = element.previousElementSibling;
+        //If there is an error message created then we need to remove it if name is valid
+        if (element.className === "invalid"){
+            element.classList.remove('invalid');
+            element.parentElement.removeChild(removeP)
+        }
+    }
+}
+
+
+// Real time validation for activities checkboxes (at least 1 activities must be selected)
+activitiesDiv.addEventListener('click', (e) => {
+    if (e.target.tagName ==="INPUT") {
+        //If invalid
+        if (!checkBoxValidator()) {
+            // if the activities has not be declared as invalid yet
+            if (activitiesDiv.className !== "invalid-activities") {     
+                let errorHTML = document.createElement('p');
+                errorHTML.textContent = checkboxError;
+                errorHTML.style.color = "red"
+                activitiesDiv.insertBefore(errorHTML, document.querySelector('.activities label'))
+                activitiesDiv.classList.add("invalid-activities");
+            } 
+
+        } 
+        //If valid
+        else {
+            removeP = document.querySelector('.activities p')
+            console.log(removeP)
+            // If there is an error message created then we need to remove it if name is valid
+            if (activitiesDiv.className === "activities invalid-activities"){
+                activitiesDiv.classList.remove('invalid-activities');
+                activitiesDiv.removeChild(removeP);
+            }
+        }
+      
+    }
+})
 
 
 function initialize() {
@@ -350,5 +459,8 @@ function initialize() {
     activitiesSection();
     paymentSection();
 }
+
+//Setting autofocus on name when page reload 
+name.focus();
 
 initialize();

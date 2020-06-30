@@ -104,6 +104,9 @@ input:focus {
 .invalid {
 	border: 1px red solid;
 }
+.invalid-activities {
+	color: red;
+}
 
 input[type="checkbox"],
 input[type="radio"] {
