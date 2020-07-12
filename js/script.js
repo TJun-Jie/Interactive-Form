@@ -336,15 +336,25 @@ function cvvValidator() {
 
 // check if all fields are valid before submitting. If not prevent it from submitting
 form.addEventListener('submit', (e) => {
-    if(!nameValidator()){
-        createErrorMessage(nameValidator, name, nameError);
-        name.focus();
-        e.preventDefault();
-    }
-    if (!emailValidator()) {
-        createErrorMessage(emailValidator, email, emailError);
-        email.focus();
-        e.preventDefault();
+
+    // Only check credit card validation if payment is credit card
+    if (payment.value === "credit card") {
+        if (!cvvValidator()){
+            cvv.className = "invalid"
+            cvv.focus();
+            e.preventDefault();
+            
+        };
+        if (!zipValidator()){
+            zip.className = "invalid"
+            zip.focus();
+            e.preventDefault();
+        };
+        if (!cardNumberValidator()){
+            cardNumber.className = "invalid"
+            cardNumber.focus()
+            e.preventDefault();
+        };
     }
     if (!checkBoxValidator()) {
         // if the activities has not be declared as invalid yet then create the html.
@@ -357,28 +367,16 @@ form.addEventListener('submit', (e) => {
             e.preventDefault();
         } 
     }
+    if (!emailValidator()) {
+        createErrorMessage(emailValidator, email, emailError);
+        email.focus();
+        e.preventDefault();
+    }
 
-    // Only check credit card validation if payment is credit card
-    if (payment.value === "credit card") {
-        if (!cardNumberValidator()){
-            cardNumber.className = "invalid"
-            console.log(cardNumberError);
-            cardNumber.focus()
-            e.preventDefault();
-        };
-    
-        if (!zipValidator()){
-            zip.className = "invalid"
-            console.log(zipError);
-            zip.focus();
-            e.preventDefault();
-        };
-        if (!cvvValidator()){
-            cvv.className = "invalid"
-            console.log(cvvError)
-            cvv.focus();
-            e.preventDefault();
-        };
+    if(!nameValidator()){
+        createErrorMessage(nameValidator, name, nameError);
+        name.focus();
+        e.preventDefault();
     }
 })
 
