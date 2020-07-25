@@ -179,11 +179,16 @@ function activitiesSection() {
             if(takenTiming.includes(activities[i].dataset.dayAndTime) && (e.target !== activities[i])){
                 // Only disable those that are not checked
                 if(!activities[i].checked){
+                    console.log(activities[i].parentElement)
+                    activities[i].parentElement.style.textDecoration= 'line-through'
+                    activities[i].parentElement.style.color= 'red'
                     activities[i].disabled = true;
                 }
             } else {
                 //Resets the checkbox when the same timings chekcbox are unchecked 
                 activities[i].disabled = false;
+                activities[i].parentElement.style.textDecoration= ''
+                activities[i].parentElement.style.color= 'black'
             }
         } 
     }
