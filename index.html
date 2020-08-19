@@ -3,9 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Register for Full Stack Conf</title>
+  <title>Register for Full Stack Conf</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 	<link rel="stylesheet" href="css/style.css">
-	<link rel="stylesheet" href="css/normalize.css">
+	<!-- <link rel="stylesheet" href="css/normalize.css"> -->
 </head>
 <body>
 	<div class="container">
@@ -17,34 +18,37 @@
 
     <form action="index.html" method="post" novalidate>
               
-      <fieldset>         
+      <fieldset >         
         <legend>Basic Info</legend>
-        
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="user-name" >
-        
-        <label for="mail">Email:</label>
-        <input type="email" id="mail" name="user-email">
-        
-        <label for="title">Job Role</label>
-        <select id="title" name="user-title">
-          <option value="full-stack js developer">Full Stack JavaScript Developer</option>
-          <option value="front-end developer">Front End Developer</option>
-          <option value="back-end developer">Back End Developer</option>
-          <option value="designer">Designer</option>          
-          <option value="student">Student</option>
-          <option value="other">Other</option>  
-        </select>
-        <textarea id="other-title" placeholder="Your Job Role" style="display: block; margin-top: 1em; width: 100%;"></textarea>           
+        <div class="form-group">
+          <label for="name">Name:</label>
+          <input type="text" class="form-control" id="name" name="user-name" >
+        </div>
+        <div class="form-group">
+          <label for="mail">Email:</label>
+          <input type="email" class="form-control" id="mail" name="user-email">
+        </div>
+        <div class="form-group">
+          <label for="title">Job Role</label>
+          <select id="title" name="user-title" class="custom-select">
+            <option value="full-stack js developer">Full Stack JavaScript Developer</option>
+            <option value="front-end developer">Front End Developer</option>
+            <option value="back-end developer">Back End Developer</option>
+            <option value="designer">Designer</option>          
+            <option value="student">Student</option>
+            <option value="other">Other</option>  
+          </select>
+          <textarea class="form-control" id="other-title" placeholder="Your Job Role" style="display: block; margin-top: 1em; width: 100%;"></textarea>           
+        </div>
       </fieldset>
       
       <fieldset class="shirt">
         <legend>T-Shirt Info</legend>
         
-        <div class="shirt-box">
+        <div class="shirt-box form-group">
           <div>
             <label for="size">Size:</label>
-            <select id="size" name="user-size">
+            <select class="custom-select" id="size" name="user-size">
               <option value="small">S</option>
               <option value="medium" selected>M</option>
               <option value="large">L</option>
@@ -52,18 +56,18 @@
             </select>
           </div>
 
-          <div>
+          <div class="form-group">
             <label for="design">Design:</label>
-            <select id="design" name="user-design">
+            <select class="custom-select" id="design" name="user-design">
               <option>Select Theme</option>
               <option value="js puns">Theme - JS Puns</option>
               <option value="heart js">Theme - I &#9829; JS</option>
             </select>
           </div>
 
-          <div id="colors-js-puns" class="">
+          <div class="form-group" id="colors-js-puns" class="">
             <label for="color">Color:</label>
-            <select id="color">
+            <select class="custom-select" id="color">
               <option value="cornflowerblue">Cornflower Blue (JS Puns shirt only)</option>
               <option value="darkslategrey">Dark Slate Grey (JS Puns shirt only)</option> 
               <option value="gold">Gold (JS Puns shirt only)</option> 
@@ -76,88 +80,106 @@
       </fieldset>
 
       <fieldset class="activities">
-        <legend>Register for Activities</legend>
-          <label>
-            <input type="checkbox" name="all" data-cost="200"> Main Conference — $200
-          </label>
-          <label>
-            <input type="checkbox" name="js-frameworks" data-day-and-time="Tuesday 9am-12pm" data-cost="100"> 
-            JavaScript Frameworks Workshop — Tuesday 9am-12pm, $100
-          </label>
-          <label>
-            <input type="checkbox" name="js-libs" data-day-and-time="Tuesday 1pm-4pm" data-cost="100"> 
-            JavaScript Libraries Workshop — Tuesday 1pm-4pm, $100
-          </label>
-          <label>
-            <input type="checkbox" name="express" data-day-and-time="Tuesday 9am-12pm" data-cost="100"> 
-            Express Workshop — Tuesday 9am-12pm, $100
-          </label>
-          <label>
-            <input type="checkbox" name="node" data-day-and-time="Tuesday 1pm-4pm" data-cost="100"> 
-            Node.js Workshop — Tuesday 1pm-4pm, $100
-          </label>          
-          <label>
-            <input type="checkbox" name="build-tools" data-day-and-time="Wednesday 9am-12pm" data-cost="100"> 
-            Build tools Workshop — Wednesday 9am-12pm, $100
-          </label>
-          <label>
-            <input type="checkbox" name="npm" data-day-and-time="Wednesday 1pm-4pm" data-cost="100"> 
-            npm Workshop — Wednesday 1pm-4pm, $100
-          </label>
-          
-                  	
+        <legend id="legend">Register for Activities</legend>
+          <div class="custom-control custom-checkbox">
+            <input id="all" class="custom-control-input" type="checkbox" name="all" data-cost="200"> 
+            <label class="custom-control-label" for="all">Main Conference — $200</label>
+          </div>
+          <div class="custom-control custom-checkbox">
+            <input class="custom-control-input" id="js-frameworks" type="checkbox" name="js-frameworks" data-day-and-time="Tuesday 9am-12pm" data-cost="100"> 
+            <label class="custom-control-label" for="js-frameworks">
+              JavaScript Frameworks Workshop — Tuesday 9am-12pm, $100
+            </label>
+          </div>
+          <div class="custom-control custom-checkbox">
+            <input id="js-libs" class="custom-control-input" type="checkbox" name="js-libs" data-day-and-time="Tuesday 1pm-4pm" data-cost="100"> 
+            <label for="js-libs" class="custom-control-label">
+              JavaScript Libraries Workshop — Tuesday 1pm-4pm, $100
+            </label>
+          </div>
+          <div class="custom-control custom-checkbox">
+            <input type="checkbox" name="express" id="express" class="custom-control-input" data-day-and-time="Tuesday 9am-12pm" data-cost="100"> 
+            <label class="custom-control-label" for="express">
+              Express Workshop — Tuesday 9am-12pm, $100
+            </label>
+          </div>
+          <div class="custom-control custom-checkbox">
+            <input id="node" class="custom-control-input" type="checkbox" name="node" data-day-and-time="Tuesday 1pm-4pm" data-cost="100"> 
+            <label for="node" class="custom-control-label"> 
+              Node.js Workshop — Tuesday 1pm-4pm, $100
+            </label>          
+          </div>
+          <div class="custom-control custom-checkbox">
+            <input  class="custom-control-input" id="build-tools" type="checkbox" name="build-tools" data-day-and-time="Wednesday 9am-12pm" data-cost="100"> 
+            <label class="custom-control-label" for="build-tools">
+              Build tools Workshop — Wednesday 9am-12pm, $100
+            </label>
+          </div>
+          <div class="custom-control custom-checkbox">
+            <input class="custom-control-input" id="npm" type="checkbox" name="npm" data-day-and-time="Wednesday 1pm-4pm" data-cost="100"> 
+            <label class="custom-control-label" for="npm">
+              npm Workshop — Wednesday 1pm-4pm, $100
+            </label>
+          </div>              	
       </fieldset>
-      <fieldset>
+      <fieldset >
         <legend>Payment Info</legend>
-
-        <label for="payment">I'm going to pay with:</label>
-        <select id="payment" name="user-payment">
-          <option value="select method">Select Payment Method</option>
-          <option value="credit card">Credit Card</option>
-          <option value="paypal">PayPal</option>
-          <option value="bitcoin">Bitcoin</option>
-        </select>
+        <div class="form-group">
+          <label for="payment">I'm going to pay with:</label>
+          <select class="custom-select" id="payment" name="user-payment">
+            <option value="select method">Select Payment Method</option>
+            <option value="credit card">Credit Card</option>
+            <option value="paypal">PayPal</option>
+            <option value="bitcoin">Bitcoin</option>
+          </select>
+        </div>
 
         <div id="credit-card" class="credit-card">
+          <div class="row">
+            <div class="col-sm-12 form-group">
+              <label for="cc-num">Card Number:</label>
+              <input class="form-control" id="cc-num" name="user-cc-num" type="text">
+            </div>
+  
+            <div class=" col-sm form-group">
+              <label for="zip">Zip Code:</label>
+              <input id="zip" name="user-zip" class="form-control" type="text"> 
+            </div>
+  
+            <div class="col-sm form-group">
+              <label for="cvv">CVV:</label>
+              <input class="form-control" id="cvv" name="user-cvv" type="text"> 
+            </div>
 
-          <div class="col-6 col">
-            <label for="cc-num">Card Number:</label>
-        	  <input id="cc-num" name="user-cc-num" type="text">
+          </div>
+          <div class="form-group">
+            <label for="exp-month">Expiration Date:</label>
+            <select class="custom-select" id="exp-month" name="user-exp-month">
+              <option value="1">1 - January</option>
+              <option value="2">2 - February</option>
+              <option value="3">3 - March</option>
+              <option value="4">4 - April</option>
+              <option value="5">5 - May</option>
+              <option value="6">6 - June</option>
+              <option value="7">7 - July</option>
+              <option value="8">8 - August</option>
+              <option value="9">9 - September</option>
+              <option value="10">10 - October</option>
+              <option value="11">11 - November</option>	
+              <option value="12">12 - December</option>          		          
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="exp-year">Expiration Year:</label>
+            <select class="custom-select" id="exp-year" name="user-exp-year">
+              <option value="2016">2016</option>
+              <option value="2017">2017</option>
+              <option value="2018">2018</option>
+              <option value="2019">2019</option>
+              <option value="2020">2020</option>        		          
+            </select> 	                  	         
           </div>
 
-          <div class="col-3 col">
-            <label for="zip">Zip Code:</label>
-            <input id="zip" name="user-zip" type="text"> 
-          </div>
-
-          <div class="col-3 col">
-            <label for="cvv">CVV:</label>
-            <input id="cvv" name="user-cvv" type="text"> 
-          </div>
-
-          <label for="exp-month">Expiration Date:</label>
-          <select id="exp-month" name="user-exp-month">
-            <option value="1">1 - January</option>
-            <option value="2">2 - February</option>
-            <option value="3">3 - March</option>
-            <option value="4">4 - April</option>
-            <option value="5">5 - May</option>
-            <option value="6">6 - June</option>
-            <option value="7">7 - July</option>
-            <option value="8">8 - August</option>
-            <option value="9">9 - September</option>
-            <option value="10">10 - October</option>
-            <option value="11">11 - November</option>	
-            <option value="12">12 - December</option>          		          
-          </select>
-          <label for="exp-year">Expiration Year:</label>
-          <select id="exp-year" name="user-exp-year">
-            <option value="2016">2016</option>
-            <option value="2017">2017</option>
-            <option value="2018">2018</option>
-            <option value="2019">2019</option>
-            <option value="2020">2020</option>        		          
-          </select> 	                  	         
         </div>
 
         <div id="paypal" class="paypal">
@@ -176,5 +198,8 @@
 
   </div>
   <script src="js/script.js"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>
 </html>

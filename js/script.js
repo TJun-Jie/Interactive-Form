@@ -179,7 +179,6 @@ function activitiesSection() {
             if(takenTiming.includes(activities[i].dataset.dayAndTime) && (e.target !== activities[i])){
                 // Only disable those that are not checked
                 if(!activities[i].checked){
-                    console.log(activities[i].parentElement)
                     activities[i].parentElement.style.textDecoration= 'line-through'
                     activities[i].parentElement.style.color= 'red'
                     activities[i].disabled = true;
@@ -363,11 +362,13 @@ form.addEventListener('submit', (e) => {
     }
     if (!checkBoxValidator()) {
         // if the activities has not be declared as invalid yet then create the html.
-        if (activitiesDiv.className !== "activities invalid-activities") {     
+        if (!activitiesDiv.classList.contains("invalid-activities")) {
+            console.log('triggered')     
             let errorHTML = document.createElement('p');
             errorHTML.textContent = checkboxError;
             errorHTML.style.color = "red"
-            activitiesDiv.insertBefore(errorHTML, document.querySelector('.activities label'))
+            console.log(activitiesDiv)
+            activitiesDiv.insertBefore(errorHTML, document.querySelector('#legend'))
             activitiesDiv.classList.add("invalid-activities");
             e.preventDefault();
         } 
@@ -451,7 +452,7 @@ function createErrorMessage(validator, element, errorMessage) {
     // If not valid
     if (!validator()) {
         // if the element has not be declared as invalid yet create new error message and put it beside label
-        if (element.className !== "invalid") {     
+        if (!element.classList.contains("invalid") ) {     
             let errorHTML = document.createElement('p');
             errorHTML.textContent = errorMessage
             errorHTML.style.color = "red"
@@ -485,11 +486,13 @@ activitiesDiv.addEventListener('click', (e) => {
         //If invalid
         if (!checkBoxValidator()) {
             // if the activities has not be declared as invalid yet
-            if (activitiesDiv.className !== "invalid-activities") {     
+            if (!activitiesDiv.classList.contains("invalid-activities")) {
+                console.log('triggered')     
                 let errorHTML = document.createElement('p');
                 errorHTML.textContent = checkboxError;
                 errorHTML.style.color = "red"
-                activitiesDiv.insertBefore(errorHTML, document.querySelector('.activities label'))
+                console.log(activitiesDiv)
+                activitiesDiv.insertBefore(errorHTML, document.querySelector('#legend'))
                 activitiesDiv.classList.add("invalid-activities");
             } 
 
@@ -497,7 +500,6 @@ activitiesDiv.addEventListener('click', (e) => {
         //If valid
         else {
             removeP = document.querySelector('.activities p')
-            console.log(removeP)
             // If there is an error message created then we need to remove it if name is valid
             if (activitiesDiv.className === "activities invalid-activities"){
                 activitiesDiv.classList.remove('invalid-activities');
