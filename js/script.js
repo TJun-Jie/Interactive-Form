@@ -472,7 +472,7 @@ function createErrorMessage(validator, element, errorMessage) {
     else {
         removeP = element.previousElementSibling;
         //If there is an error message created then we need to remove it if name is valid
-        if (element.className === "invalid"){
+        if (element.classList.contains("invalid")){
             element.classList.remove('invalid');
             element.parentElement.removeChild(removeP)
         }
